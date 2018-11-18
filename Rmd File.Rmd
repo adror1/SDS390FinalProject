@@ -7,7 +7,10 @@ output: html_document
 
 
 ```{r, message = FALSE, warning = FALSE}
-
+library(tidyverse)
 bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
+
+bill_sponsers_data <- bill_sponsers_data %>%
+  mutate(sponsor = ifelse(position == 1, TRUE, FALSE))
 
 ```
