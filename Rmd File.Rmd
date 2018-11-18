@@ -1,0 +1,13 @@
+---
+title: "Rmd File"
+author: "Arielle Dror, Kara Van Allen, Emily Daubenspeck"
+date: "November 18, 2018"
+output: html_document
+---
+
+
+```{r, message = FALSE, warning = FALSE}
+
+
+
+```
