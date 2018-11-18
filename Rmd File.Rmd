@@ -8,6 +8,6 @@ output: html_document
 
 ```{r, message = FALSE, warning = FALSE}
 
-
+bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
 
 ```
