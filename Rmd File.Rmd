@@ -9,14 +9,26 @@ output: html_document
 ```{r, message = FALSE, warning = FALSE}
 library(tidyverse)
 library(igraph)
+library(readr)
 
 bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
 
 bill_sponsers_data <- bill_sponsers_data %>%
   mutate(sponsor = ifelse(position == 1, TRUE, FALSE))
 
+<<<<<<< HEAD
 node_characteristics <- read_csv("node_characteristics.csv")
 ```
+=======
+# fowler_congress <- read_csv("govtrack_cosponsor_data_111_congress.csv")
+# fowler_congress <- fowler_congress %>%
+#   mutate(bill_type = str_detect(bill_number, "h")) %>%
+#   filter(bill_type == FALSE)
+# 
+# check <- fowler_congress %>%
+#   group_by(name) %>%
+#   summarize(n = n())
+>>>>>>> a734a996c9caa25a695b7ec13c36cfc84f4b0338
 
 ```{r}
 mat<-diag(5)
