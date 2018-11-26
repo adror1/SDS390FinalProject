@@ -16,9 +16,9 @@ bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
 bill_sponsers_data <- bill_sponsers_data %>%
   mutate(sponsor = ifelse(position == 1, TRUE, FALSE))
 
-fowler_congress <- read_csv("govtrack_cosponsor_data_111_congress.csv") %>%
-  mutate(bill_number = ifelse(grepl("hconres"), TRUE, FALSE)))
-
-
+fowler_congress <- read_csv("govtrack_cosponsor_data_111_congress.csv")
+fowler_congress <- fowler_congress %>%
+  mutate(bill_type = str_detect(bill_number, "h")) %>%
+  filter(bill_type == FALSE)
 
 ```
