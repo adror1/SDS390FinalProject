@@ -16,7 +16,6 @@ bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
 bill_sponsers_data <- bill_sponsers_data %>%
   mutate(sponsor = ifelse(position == 1, TRUE, FALSE))
 
-<<<<<<< HEAD
 node_characteristics <- read_csv("node_characteristics.csv")
 ```
 =======
@@ -36,13 +35,23 @@ mat<-diag(5)
 mat[c(1,3,4), c(1,3,4)]<-mat[c(1,3,4), c(1,3,4)]+1
 
 diag(mat)<-0
-names_people=
+
+split_name <- str_split_fixed(node_characteristics$Name, " ", 3)
+  
+node_characteristics <- node_characteristics %>%
+  mutate(firstLast = paste(split_name[, 2], split_name[, 1], sep = ' ')) %>%
+  mutate(firstLast = gsub(',', replacement = '', firstLast)) %>%
+  mutate(firstLast = if_else(firstLast == "Hollen Van", "Chris Van Hollen", firstLast)) %>%
+  mutate(firstLast = if_else(firstLast == "Catherine Masto", "Catherine Cortez Masto", firstLast))
+names_people <- c(node_characteristics$firstLast)
+
 short_sponsors <- bill_sponsers_data %>%
   select(bill_number, name)
-for(n in unique(short_sponsors$bill_number)) {
-  short_sponsors_temp <- short_sponsors %>%
-    filter(bill_number == n)
 cosponsors <- c(short_sponsors$name)
+
+for(n in unique(short_sponsors$bill_number)) {
+  # short_sponsors_temp <- short_sponsors %>%
+  #   filter(bill_number == n)
 mat[names_people==cosponsors, names_people==cosponsors] <- mat[names_people==cosponsors, names_people==cosponsors] + 1
 #end loop
 }
