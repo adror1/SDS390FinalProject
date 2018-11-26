@@ -16,5 +16,50 @@ bill_sponsers_data <- bill_sponsers_data %>%
   mutate(sponsor = ifelse(position == 1, TRUE, FALSE))
 
 node_characteristics <- read_csv("node_characteristics.csv")
+```
 
+```{r}
+mat<-diag(5)
+
+mat[c(1,3,4), c(1,3,4)]<-mat[c(1,3,4), c(1,3,4)]+1
+
+diag(mat)<-0
+names_people=
+short_sponsors <- bill_sponsers_data %>%
+  select(bill_number, name)
+for(n in unique(short_sponsors$bill_number)) {
+  short_sponsors_temp <- short_sponsors %>%
+    filter(bill_number == n)
+cosponsors <- c(short_sponsors$name)
+mat[names_people==cosponsors, names_people==cosponsors] <- mat[names_people==cosponsors, names_people==cosponsors] + 1
+#end loop
+}
+
+
+attempt <- function(bill_num){
+  filter(short_sponsors$bill_number == bill_num)
+  cosponsors <- c(short_sponsors$name)
+  mat[cosponsors, cosponsors] <- mat[cosponsors, cosponsors] + 1
+}
+
+mat_list <- lapply(short_sponsors$bill_number, attempt) 
+
+  diag(mat)<-0
+```
+
+```{r}
+mat<-diag(7)
+
+mat
+even<-floor((1:7)/2)==(1:7)/2
+mat[even,even]<-mat[even,even]+1
+mat
+```
+
+
+```{r}
+data_for_adjacencylist <- bill_sponsers_data %>%
+  group_by(bill_number) %>%
+  mutate(nodeOne = if_else(sponsor == TRUE, name, ''))
+  
 ```
