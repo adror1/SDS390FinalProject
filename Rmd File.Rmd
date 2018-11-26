@@ -9,12 +9,16 @@ output: html_document
 ```{r, message = FALSE, warning = FALSE}
 library(tidyverse)
 library(igraph)
+library(readr)
 
 bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
 
 bill_sponsers_data <- bill_sponsers_data %>%
   mutate(sponsor = ifelse(position == 1, TRUE, FALSE))
 
-node_characteristics <- read_csv("node_characteristics.csv")
+fowler_congress <- read_csv("govtrack_cosponsor_data_111_congress.csv") %>%
+  mutate(bill_number = ifelse(grepl("hconres"), TRUE, FALSE)))
+
+
 
 ```
