@@ -1,0 +1,103 @@
+Name,State,State code,Party,Gender,Age,Race,Number of bills cosponsered,Number of bills sponsered
+"Jones, Doug",Alabama,1,Democratic,M,64,White,214,32
+"Sessions, Jeff",Alabama,1,Republican,M,71,White,1,0
+"Strange, Luther",Alabama,1,Republican,M,65,White,93,20
+"Shelby, Richard C.",Alabama,1,Republican,M,84,White,57,21
+"Murkowski, Lisa",Alaska,2,Republican,F,61,White,286,105
+"Sullivan, Dan",Alaska,2,Republican,M,54,White,244,63
+"McCain, John",Arizona,4,Republican,M,82,White,183,58
+"Flake, Jeff",Arizona,4,Republican,M,55,White,135,115
+"Boozman, John",Arkansas,5,Republican,M,67,White,293,51
+"Cotton, Tom",Arkansas,5,Republican,M,41,White,248,49
+"Harris, Kamala",California,6,Democratic,F,54,African-American,395,62
+"Feinstein, Dianne",California,6,Democratic,F,85,White,553,82
+"Gardner, Cory",Colorado,8,Republican,M,44,White,315,103
+"Bennet, Michael F.",Colorado,8,Democratic,M,53,White,391,95
+"Murphy, Christopher S.",Connecticut,9,Democratic,M,45,White,378,89
+"Blumenthal, Richard",Connecticut,9,Democratic,M,72,White,818,141
+"Carper, Thomas R.",Delaware,10,Democratic,M,71,White,351,57
+"Coons, Christopher A.",Delaware,10,Democratic,M,55,White,584,104
+"Rubio, Marco",Florida,12,Republican,M,47,Hispanic,474,199
+"Nelson, Bill",Florida,12,Democratic,M,76,White,448,123
+"Isakson, Johnny",Georgia,13,Republican,M,73,White,240,52
+"Perdue, David",Georgia,13,Republican,M,68,White,252,64
+"Hirono, Mazie K.",Hawaii,15,Democratic,F,71,Asian,445,127
+"Schatz, Brian",Hawaii,15,Democratic,M,46,White,284,73
+"Risch, James E.",Idaho,16,Republican,M,75,White,229,48
+"Crapo, Mike",Idaho,16,Republican,M,67,White,222,42
+"Duckworth, Tammy",Illinois,17,Democratic,F,50,Asian,455,117
+"Durbin, Richard",Illinois,17,Democratic,M,73,White,544,99
+"Donnelly, Joe",Indiana,18,Democratic,M,63,White,275,66
+"Young, Todd",Indiana,18,Republican,M,46,White,230,76
+"Ernst, Joni",Iowa,19,Republican,F,48,White,255,56
+"Grassley, Chuck",Iowa,19,Republican,M,85,White,249,113
+"Roberts, Pat",Kansas,20,Republican,M,82,White,235,28
+"Moran, Jerry",Kansas,20,Republican,M,64,White,248,80
+"Paul, Rand",Kentucky,21,Republican,M,55,White,155,116
+"McConnell, Mitch",Kentucky,21,Republican,M,76,White,69,129
+"Cassidy, Bill",Louisiana,22,Republican,M,61,White,233,108
+"Kennedy, John",Louisiana,22,Republican,M,66,White,236,76
+"King, Angus S., Jr.",Maine,23,Independent,M,74,White,463,48
+"Collins, Susan M.",Maine,23,Republican,F,65,White,401,83
+"Cardin, Benjamin L.",Maryland,24,Democratic,M,75,White,416,186
+"Van Hollen, Chris",Maryland,24,Democratic,M,59,White,576,46
+"Warren, Elizabeth",Massachusetts,25,Democratic,F,69,White,804,189
+"Markey, Edward J.",Massachusetts,25,Democratic,M,72,White,613,115
+"Peters, Gary C.",Michigan,26,Democratic,M,59,White,409,57
+"Stabenow, Debbie",Michigan,26,Democratic,F,68,White,437,94
+"Klobuchar, Amy",Minnesota,27,Democratic,F,58,White,637,152
+"Franken, Al",Minnesota,27,Democratic,M,67,White,368,46
+"Cochran, Thad",Mississippi,28,Republican,M,80,White,120,5
+"Wicker, Roger F.",Mississippi,28,Republican,M,67,White,285,80
+"McCaskill, Claire",Missouri,29,Democratic,F,65,White,298,67
+"Blunt, Roy",Missouri,29,Republican,M,68,White,291,54
+"Tester, Jon",Montana,30,Democratic,M,62,White,380,99
+"Daines, Steve",Montana,30,Republican,M,56,White,292,103
+"Fischer, Deb",Nebraska,31,Republican,F,67,White,188,46
+"Sasse, Ben",Nebraska,31,Republican,M,46,White,122,32
+"Heller, Dean",Nevada,32,Republican,M,58,White,281,153
+"Masto, Catherine Cortez",Nevada,32,Democratic,F,54,Hispanic,356,63
+"Shaheen, Jeanne",New Hampshire,33,Democratic,F,71,White,558,121
+"Hassan, Maggie",New Hampshire,33,Democratic,F,60,White,508,19
+"Menendez, Robert",New Jersey,34,Democratic,M,64,Hispanic,436,188
+"Booker, Cory A.",New Jersey,34,Democratic,M,49,African-American,590,124
+"Udall, Tom",New Mexico,35,Democratic,M,70,White,424,93
+"Heinrich, Martin",New Mexico,35,Democratic,M,47,White,357,68
+"Schumer, Charles E.",New York,36,Democratic,M,67,White,241,47
+"Gillibrand, Kirsten E.",New York,36,Democratic,F,51,White,582,100
+"Tillis, Thom",North Carolina,37,Republican,M,58,White,278,39
+"Burr, Richard",North Carolina,37,Republican,M,62,White,131,54
+"Heitkamp, Heidi",North Dakota,38,Democratic,F,63,White,326,77
+"Hoeven, John",North Dakota,38,Republican,M,61,White,196,80
+"Portman, Rob",Ohio,39,Republican,M,62,White,262,81
+"Brown, Sherrod",Ohio,39,Democratic,M,66,White,618,130
+"Lankford, James",Oklahoma,40,Republican,M,50,White,202,56
+"Inhofe, James M.",Oklahoma,40,Republican,M,83,White,281,87
+"Merkley, Jeff",Oregon,41,Democratic,M,63,White,613,115
+"Wyden, Ron",Oregon,41,Democratic,M,69,White,494,169
+"Casey, Robert P., Jr.",Pennsylvania,42,Democratic,M,58,White,445,100
+"Toomey, Pat",Pennsylvania,42,Republican,M,57,White,140,53
+"Whitehouse, Sheldon",Rhode Island,44,Democratic,M,63,White,520,79
+"Reed, Jack",Rhode Island,44,Democratic,M,69,White,359,85
+"Graham, Lindsey",South Carolina,45,Republican,M,63,White,180,61
+"Scott, Tim",South Carolina,45,Republican,M,53,African-American,196,43
+"Rounds, Mike",South Dakota,46,Republican,M,64,White,277,74
+"Thune, John",South Dakota,46,Republican,M,57,White,368,243
+"Corker, Bob",Tennessee,47,Republican,M,66,White,74,39
+"Alexander, Lamar",Tennessee,47,Republican,M,78,White,131,45
+"Cruz, Ted",Texas,48,Republican,M,47,White,325,108
+"Cornyn, John",Texas,48,Republican,M,66,White,297,128
+"Lee, Mike",Utah,49,Republican,M,47,White,188,192
+"Hatch, Orrin G.",Utah,49,Republican,M,84,White,263,172
+"Leahy, Patrick J.",Vermont,50,Democratic,M,78,White,375,30
+"Sanders, Bernard",Vermont,50,Independent,M,77,White,339,101
+"Kaine, Tim",Virginia,51,Democratic,M,60,White,379,56
+"Warner, Mark R.",Virginia,51,Democratic,M,63,White,286,75
+"Murray, Patty",Washington,53,Democratic,F,68,White,434,77
+"Cantwell, Maria",Washington,53,Democratic,F,60,White,287,80
+"Capito, Shelley Moore",West Virginia,54,Republican,F,64,White,339,35
+"Manchin, Joe, III",West Virginia,54,Democratic,M,71,White,320,67
+"Baldwin, Tammy",Wisconsin,55,Democratic,F,56,White,657,111
+"Johnson, Ron",Wisconsin,55,Republican,M,63,White,166,74
+"Enzi, Michael B.",Wyoming,56,Republican,M,74,White,179,42
+"Barrasso, John",Wyoming,56,Republican,M,66,White,169,46

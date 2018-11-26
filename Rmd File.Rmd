@@ -15,6 +15,6 @@ bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
 bill_sponsers_data <- bill_sponsers_data %>%
   mutate(sponsor = ifelse(position == 1, TRUE, FALSE))
 
-
+node_characteristics <- read_csv("node_characteristics.csv")
 
 ```
