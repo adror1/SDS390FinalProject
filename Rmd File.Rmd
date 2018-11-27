@@ -30,12 +30,6 @@ node_characteristics <- read_csv("node_characteristics.csv")
 >>>>>>> a734a996c9caa25a695b7ec13c36cfc84f4b0338
 
 ```{r}
-mat<-diag(5)
-
-mat[c(1,3,4), c(1,3,4)]<-mat[c(1,3,4), c(1,3,4)]+1
-
-diag(mat)<-0
-
 split_name <- str_split_fixed(node_characteristics$Name, " ", 3)
   
 node_characteristics <- node_characteristics %>%
@@ -43,19 +37,45 @@ node_characteristics <- node_characteristics %>%
   mutate(firstLast = gsub(',', replacement = '', firstLast)) %>%
   mutate(firstLast = if_else(firstLast == "Hollen Van", "Chris Van Hollen", firstLast)) %>%
   mutate(firstLast = if_else(firstLast == "Catherine Masto", "Catherine Cortez Masto", firstLast))
+
 names_people <- c(node_characteristics$firstLast)
 
 short_sponsors <- bill_sponsers_data %>%
   select(bill_number, name)
 cosponsors <- c(short_sponsors$name)
 
+cosponsors<-unique(cosponsors)
+
+node_characteristics_temp <- node_characteristics %>%
+  select(firstLast, State, Gender, Age)
+
+node_characteristics_temp$firstLast <- node_characteristics_temp$firstLast[order(match(node_characteristics_temp$firstLast,cosponsors))]
+
+node_characteristics_final <- left_join(node_characteristics_temp, node_characteristics, by = "firstLast")
+node_characteristics_final <- node_characteristics_final %>%
+  select(firstLast, State.y:"Number of bills sponsered") %>%
+  rename(State = State.y,
+         Age = Age.y,
+         Gender = Gender.y)
+
+
+#node_characteristics <- node_characteristics %>%
+ #mutate(firstLast = node_characteristics_order)
+
+mat<-diag(105) #check this :)
+
+diag(mat)<-0 
 for(n in unique(short_sponsors$bill_number)) {
-  # short_sponsors_temp <- short_sponsors %>%
-  #   filter(bill_number == n)
-mat[names_people==cosponsors, names_people==cosponsors] <- mat[names_people==cosponsors, names_people==cosponsors] + 1
+  short_sponsors_temp <- short_sponsors %>%
+   filter(bill_number == n)
+   names_people<-short_sponsors_temp$name
+ 
+mat[cosponsors%in%(names_people), cosponsors%in%(names_people)] <- mat[cosponsors%in%(names_people), cosponsors%in%(names_people)] + 1
 #end loop
 }
 
+diag(mat)<-0
+ 
 
 attempt <- function(bill_num){
   filter(short_sponsors$bill_number == bill_num)
@@ -63,7 +83,6 @@ attempt <- function(bill_num){
   mat[cosponsors, cosponsors] <- mat[cosponsors, cosponsors] + 1
 }
 
-mat_list <- lapply(short_sponsors$bill_number, attempt) 
 
   diag(mat)<-0
 ```
