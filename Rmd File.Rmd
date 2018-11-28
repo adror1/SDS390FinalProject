@@ -29,7 +29,7 @@ node_characteristics <- read_csv("node_characteristics.csv")
 #   summarize(n = n())
 >>>>>>> a734a996c9caa25a695b7ec13c36cfc84f4b0338
 
-```{r}
+``` {r}
 split_name <- str_split_fixed(node_characteristics$Name, " ", 3)
   
 node_characteristics <- node_characteristics %>%
@@ -77,14 +77,14 @@ mat[cosponsors%in%(names_people), cosponsors%in%(names_people)] <- mat[cosponsor
 diag(mat)<-0
  
 
-attempt <- function(bill_num){
-  filter(short_sponsors$bill_number == bill_num)
-  cosponsors <- c(short_sponsors$name)
-  mat[cosponsors, cosponsors] <- mat[cosponsors, cosponsors] + 1
-}
-
-
-  diag(mat)<-0
+# attempt <- function(bill_num){
+#   filter(short_sponsors$bill_number == bill_num)
+#   cosponsors <- c(short_sponsors$name)
+#   mat[cosponsors, cosponsors] <- mat[cosponsors, cosponsors] + 1
+# }
+# 
+# 
+#   diag(mat)<-0
 ```
 
 ```{r}
