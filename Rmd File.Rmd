@@ -11,8 +11,10 @@ library(tidyverse)
 library(igraph)
 library(readr)
 library(sna)
+library(blockmodels)
 
 bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
+length(unique(bill_sponsers_data$bill_number))
 
 bill_sponsers_data <- bill_sponsers_data %>%
   mutate(sponsor = ifelse(position == 1, TRUE, FALSE))
@@ -27,7 +29,8 @@ node_characteristics <- node_characteristics %>%
   mutate(firstLast = paste(split_name[, 2], split_name[, 1], sep = ' ')) %>%
   mutate(firstLast = gsub(',', replacement = '', firstLast)) %>%
   mutate(firstLast = if_else(firstLast == "Hollen Van", "Chris Van Hollen", firstLast)) %>%
-  mutate(firstLast = if_else(firstLast == "Catherine Masto", "Catherine Cortez Masto", firstLast))
+  mutate(firstLast = if_else(firstLast == "Catherine Masto", "Catherine Cortez Masto", firstLast)) %>%
+  mutate(weight = (`Number of bills cosponsered` + `Number of bills sponsered`)/3600)
 
 names_people <- c(node_characteristics$firstLast)
 
@@ -38,16 +41,17 @@ cosponsors <- c(short_sponsors$name)
 cosponsors<-unique(cosponsors)
 
 node_characteristics_temp <- node_characteristics %>%
-  select(firstLast, State, Gender, Age)
+  select(firstLast, State, Gender, Age, weight)
 
 node_characteristics_temp$firstLast <- node_characteristics_temp$firstLast[order(match(node_characteristics_temp$firstLast,cosponsors))]
 
 node_characteristics_final <- left_join(node_characteristics_temp, node_characteristics, by = "firstLast")
 node_characteristics_final <- node_characteristics_final %>%
-  select(firstLast, State.y:"Number of bills sponsered") %>%
+  select(firstLast, State.y:weight.y) %>%
   rename(State = State.y,
          Age = Age.y,
-         Gender = Gender.y)
+         Gender = Gender.y,
+         Weight = weight.y)
 
 
 #node_characteristics <- node_characteristics %>%
@@ -82,6 +86,7 @@ diag(mat)<-0
 ```
 
 ```{r}
+sponser_matrix_full <- as.matrix(mat)
 sponser_matrix <- as.matrix(mat)
 upper.tri(sponser_matrix, diag = TRUE)
 diag(sponser_matrix) <- NA
@@ -91,6 +96,8 @@ x <- cbind(which(!is.na(sponser_matrix), arr.ind = TRUE), na.omit(as.vector(spon
 x <- as.data.frame(x)
 hist(x$V3)
 
+
+
 attempt1 <- graph.adjacency(sponser_matrix, mode = "undirected", weighted = TRUE)
 plot(attempt1)
 
@@ -99,3 +106,23 @@ E(attempt1)$width <- min(E(attempt1)$weight) + 1
 plot(attempt1)
 ```
 
+```{r}
+sbm_attempt <- BM_bernoulli("SBM", sponser_matrix_full)
+sbm_attempt2 <- BM_bernoulli(
+    "SBM", 
+    sponser_matrix_full, 
+    verbosity=6,
+    autosave='',
+    plotting=character(0),
+    exploration_factor=1.5,
+    explore_min=2,
+    explore_max=7,
+    ncores=detectCores())
+sbm_attempt2$estimate()
+which.max(sbm_attempt$ICL)
+num.clusters<-3
+# sbm_attempt$memberships[[num.clusters]]$Z #gives probability of being in each group
+sbm_attempt$memberships[[num.clusters]]$plot() #plots the group memberships
+
+sbm_attempt2
+```
