@@ -109,8 +109,9 @@ plot(attempt1, layout=layout.fruchterman.reingold)
 
 plot(attempt1)
 
-sponser_matrixg <- graph.adjacency(sponser_matrix1, mode = "undirected", weighted = TRUE)
-plot(sponser_matrixg)
+sponser_matrixg <- graph.adjacency(sponser_matrix, mode = "undirected", weighted = TRUE)
+
+plot(sponser_matrixg, weights = node_characteristics_final$Weight)
 ```
 
 ```{r}
