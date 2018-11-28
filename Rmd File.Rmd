@@ -66,7 +66,7 @@ mat[cosponsors%in%(names_people), cosponsors%in%(names_people)] <- mat[cosponsor
 }
 
 diag(mat)<-0
- 
+
 
 <<<<<<< HEAD
 attempt <- function(bill_num){
@@ -90,20 +90,21 @@ diag(mat)<-0
 #   diag(mat)<-0
 >>>>>>> cbc9657f8aad80fbbd8ab485ebd75aa8e394d1bb
 ```
-
 ```{r}
-mat<-diag(7)
+sponser_matrix <- as.matrix(mat)
+upper.tri(sponser_matrix, diag = TRUE)
+diag(sponser_matrix) <- NA
+sponser_matrix[upper.tri(sponser_matrix)] <- NA
 
-mat
-even<-floor((1:7)/2)==(1:7)/2
-mat[even,even]<-mat[even,even]+1
-mat
+x <- cbind(which(!is.na(sponser_matrix), arr.ind = TRUE), na.omit(as.vector(sponser_matrix)))
+x <- as.data.frame(x)
+hist(x$V3)
+
+attempt1 <- graph.adjacency(sponser_matrix, mode = "undirected", weighted = TRUE)
+plot(attempt1)
+
+E(attempt1)$width <- min(E(attempt1)$weight) + 1
+
+plot(attempt1)
 ```
 
-
-```{r}
-data_for_adjacencylist <- bill_sponsers_data %>%
-  group_by(bill_number) %>%
-  mutate(nodeOne = if_else(sponsor == TRUE, name, ''))
-  
-```
