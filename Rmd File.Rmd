@@ -11,6 +11,8 @@ library(tidyverse)
 library(igraph)
 library(readr)
 library(sna)
+library(ggplot2)
+library(mosaic)
 
 bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
 
@@ -88,14 +90,16 @@ diag(sponser_matrix) <- NA
 sponser_matrix[upper.tri(sponser_matrix)] <- NA
 
 x <- cbind(which(!is.na(sponser_matrix), arr.ind = TRUE), na.omit(as.vector(sponser_matrix)))
-x <- as.data.frame(x)
-hist(x$V3)
+weighteddf <- as.data.frame(x)
 
 attempt1 <- graph.adjacency(sponser_matrix, mode = "undirected", weighted = TRUE)
 plot(attempt1)
 
-E(attempt1)$width <- min(E(attempt1)$weight) + 1
+plot(attempt1, layout=layout.fruchterman.reingold)
 
 plot(attempt1)
+
+sponser_matrixg <- graph.adjacency(sponser_matrix1, mode = "undirected", weighted = TRUE)
+plot(sponser_matrixg)
 ```
 
