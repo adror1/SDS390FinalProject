@@ -4,7 +4,7 @@ author: "Arielle Dror, Kara Van Allen, Emily Daubenspeck"
 date: "November 18, 2018"
 output: html_document
 ---
-
+First Rough Draft
 
 ```{r, message = FALSE, warning = FALSE}
 library(tidyverse)
@@ -79,17 +79,8 @@ attempt <- function(bill_num){
 diag(mat)<-0
   
 
-=======
-# attempt <- function(bill_num){
-#   filter(short_sponsors$bill_number == bill_num)
-#   cosponsors <- c(short_sponsors$name)
-#   mat[cosponsors, cosponsors] <- mat[cosponsors, cosponsors] + 1
-# }
-# 
-# 
-#   diag(mat)<-0
->>>>>>> cbc9657f8aad80fbbd8ab485ebd75aa8e394d1bb
 ```
+
 ```{r}
 sponser_matrix <- as.matrix(mat)
 upper.tri(sponser_matrix, diag = TRUE)
