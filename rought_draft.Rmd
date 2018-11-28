@@ -11,7 +11,9 @@ As the year comes to a close, Washington D.C. is marking the end of the 115th Co
 We obtained our data through multiple sources. All data relating to cosponsorship were obtained from [INSERT WEBSITE HERE]. We collected attributes including age, party, state represented, and the number of bills sponsered and cosponsered for each senator from Wikipedia and Congress.gov. 
 
 ##Methods
-fajksdfa
+### Completed already
+
+### What we'd like to do moving forward
 
 ##Results
 --Stay tuned!--
