@@ -8,12 +8,19 @@ output: html_document
 As the year comes to a close, Washington D.C. is marking the end of the 115th Congress (2017-2018) and the halfway point of President Donald Trump's first term. There seems to be perception by the public that Congress is more partisan than ever, but is this really true? Inspired by Fowler's work on Congressional Cosponsorship Data, we set out to determine how divided Congress really is. In order to have a manageable sample size, we use the cosponsorship data of (n bills) in the Senate during the 1115h Congress. How much cosponsorship goes on between or within parties and who seems to be facilitating this? Do Senatorial Caucuses help explain who tends to sponsor with whomst? These are the questions that we set out to answer. 
 
 ##Data
-We obtained our data through multiple sources. All data relating to cosponsorship were obtained from [INSERT WEBSITE HERE]. We collected attributes including age, party, state represented, and the number of bills sponsered and cosponsered for each senator from Wikipedia and Congress.gov. 
+We obtained our data through multiple sources. All data relating to cosponsorship of bills for the 115th Congress were obtained from Legiscan.com, a website dedicated to real-time tracking of legislation moving through both houses of Congress. Through this site, we were able to download and manipulate a series of data sets that would go on to comprise our primary adjacency matrix; this series of data sets included information on each bill (name, ID, topic, committee, etc.) and cosponsor (name, ID, etc.). Joining these sets together, we produced a comprehensive list of every senator who has cosponsored a bill in the 115th Congress. We collected attributes including age, party, state represented, and the number of bills sponsered and cosponsered for each senator from Wikipedia and Congress.gov, then used this information to form our own data file and, eventually, an object containing nodal attributes for our networks.
 
 ##Methods
 ### Completed already
 
 ### What we'd like to do moving forward
+Partisanship is inherently a question of whether observable communities or groups within a greater network can be readily identified, and whether those groups are divisible along party lines. Therefore, our focus going forward will be first and foremost on constructing a workable SBM model, which will allow us to observe and interpret a model grounded on the idea that group divisions are a defining feature of social network models. 
+
+
+After we acheive an interpretable SBM and are able to evaluate the information that it indicates, we may attempt two additional methods for modeling. First, an ERGM specifically exploring the liklihood of cosponsership between memebrs of the same party (i.e. nodematch(party), among other terms) will allow us to further investigate the role of a variety of nodal characteristics on connections within the cosponsership network. Additional ERGM terms will include ctriple (to evaluate clustering and presence of cyclic triples in the network), degree (with by= and homophily=TRUE specificed to examine degree distributions within subnetworks of nodes bearing particular characteristics), and nodematch (for party, race, gender, and age), to test for the significance of various nodal attributes on connection formation, especially those attributes heretofor undiscussed in papers on this subject (i.e. gender and race).
+
+To construct these models will be all well and good, but if we seek to discuss network topology in any kind of meaningful way, we have determined that it will be necessary to take a sample of our total set of cosponsered bills and proceed to visualize them. Vizualizing a series (~3) of these networks will allow us to use algorithmic approaches to detect the presence of communities within them and to make comments on the impact that various nodal characteristics appear to have on community formation as a whole.
+
 
 ##Results
 --Stay tuned!--
