@@ -11,12 +11,9 @@ library(tidyverse)
 library(igraph)
 library(readr)
 library(sna)
-<<<<<<< HEAD
 library(ggplot2)
 library(mosaic)
-=======
 library(blockmodels)
->>>>>>> c3d3435930354497b48130922c8e61df9be5dd7a
 
 bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
 length(unique(bill_sponsers_data$bill_number))
@@ -112,6 +109,9 @@ plot(attempt1)
 sponser_matrixg <- graph.adjacency(sponser_matrix, mode = "undirected", weighted = TRUE)
 
 plot(sponser_matrixg, weights = node_characteristics_final$Weight)
+
+node_characteristics_final <- node_characteristics_final %>%
+  mutate(PartC = ifelse())
 ```
 
 ```{r}
