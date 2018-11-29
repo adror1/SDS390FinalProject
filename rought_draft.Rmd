@@ -23,7 +23,7 @@ To construct these models will be all well and good, but if we seek to discuss n
 
 
 ##Results
---Stay tuned!--
+The way that we approached this project was fairly inefficient, where data collection is concerned. First and foremost, we were inspired by a paper by James Fowler on social network analysis of groups in Congress, and anticipated that the data he had used, or the repositories that had previously provided him access to the necessary information, would be updated to include bills from the 115th Congress, as it was our goal to incorporste Fowler's methods into a study of the most recent data available. Unfortunately, it was extremely difficult to find the necessary data in accessible, free, or otherwise reasonably usable formats, and this ate up a gigantic chunk of our time during the beginning of this project. As such, production of actual results has been slow going. Now that we have the data and have formulated it into a proper adjancency matrix, we anticipate that progress will increase at a steady pace. However, for the time being, we will be focusing our energy most closely on refining our methodological approaches and will report on any relevant results at a later time.
 
 ##Discussion
-fjakdsfa
+--Stay tuned!--
