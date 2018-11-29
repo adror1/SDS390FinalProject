@@ -2,7 +2,9 @@
 title: "RoughDraft"
 author: "Arielle Dror, Kara Van Allen, Emily Daubenspeck"
 date: "November 28, 2018"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ##Abstract
