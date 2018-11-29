@@ -3,14 +3,8 @@ title: "RoughDraft"
 output: html_document
 ---
 
-<<<<<<< HEAD
+
 ##Abstract
-##Introduction
-As the year comes to a close, Washington D.C. is marking the end of the 115th Congress (2017-2018) and the halfway point of President Donald Trump's first term. There seems to be perception by the public that Congress is more partisan than ever, but is this really true? Inspired by Fowler's work on Congressional Cosponsorship Data, we set out to figure out how divided Congress really is. In order to have a smaller sample size, we use the cosponsorship data of (3600 bills) in the Senate during the 115th Congress. How much cosponsorship goes on between each party and who seems to be facilitating this? Do Senatorial Caucuses help explain who tends to sponsor with whomst? These are the questions that we set out to answer. 
-=======
-## Abstract
--- Will be written last --
->>>>>>> b1604f205cfbfe8c90353933468cf82ce2d0dfbe
 
 ## Introduction
 As the year comes to a close, Washington D.C. is marking the end of the 115th Congress (2017-2018) and the halfway point of President Donald Trump's first term. There seems to be perception by the public that Congress is more partisan than ever, but is this really true?[^1] Political polarization within greater society is destructive in its own capacity, but polarization within the bodies of governance tasked with serving the citizens of the United States has a number of serious implications.[^2] Tremendous criticism has emerged in recent years of partisanship within Congressional bodies, due to its ability to impede the effective and efficient governing of the country as a whole.[^3] However, as vitriolic rhetoric against many marginalized groups of people is endorsed by many members of one specific party, arguments have emerged that polarization is a natural and healthy response by liberal politicians to what they perceive in their colleagues to be allegiance with a party that is supportive of, or at least indifferent to, issues of racism, classism, sexism, and many other forms of insidious discrimmination.[^4] Inspired by Fowler's[^5] work on Congressional Cosponsorship Data, we set out to determine how divided Congress really is. In order to have a manageable sample size, we use the cosponsorship data of (n bills) in the Senate during the 1115h Congress. How much cosponsorship goes on between or within parties and who seems to be facilitating this? Do Senatorial Caucuses help explain who tends to sponsor with whomst? These are the questions that we set out to answer. 
@@ -29,7 +23,7 @@ Nodal characteristics included in our data set as as follows: State, Party, Gend
 
 ### Completed already
 
---Kara--
+Currently, we have created our weighted adjacency matrix and one visualization. While the visualization is important to have, it has been challenging to create one which is easy to understand and interpret.  The very dense nature of our networks creates a unique visualization challenge which we are working to overcome.  It is our intention to next try to visualize parts of the network, and narrow down the number of interactions we are graphing in our model, in an attempt to decrease the density of the plot.
 
 ### What we'd like to do moving forward
 Partisanship is inherently a question of whether observable communities or groups within a greater network can be readily identified, and whether those groups are divisible along party lines. Therefore, our focus going forward will be first and foremost on constructing a workable SBM model, which will allow us to observe and interpret a model grounded on the idea that group divisions are a defining feature of social network models. 
@@ -43,7 +37,6 @@ To construct these models will be all well and good, but if we seek to discuss n
 The way that we approached this project was fairly inefficient, where data collection is concerned. First and foremost, we were inspired by a paper by James Fowler on social network analysis of groups in Congress, and anticipated that the data he had used, or the repositories that had previously provided him access to the necessary information, would be updated to include bills from the 115th Congress, as it was our goal to incorporste Fowler's methods into a study of the most recent data available. Unfortunately, it was extremely difficult to find the necessary data in accessible, free, or otherwise reasonably usable formats, and this ate up a gigantic chunk of our time during the beginning of this project. As such, production of actual results has been slow going. Now that we have the data and have formulated it into a proper adjancency matrix, we anticipate that progress will increase at a steady pace. However, for the time being, we will be focusing our energy most closely on refining our methodological approaches and will report on any relevant results at a later time.
 
 ## Discussion
->>>>>>> 0a59205879995c7d4c551c50c7ac99a0373ff220
 --Stay tuned!--
 
 ## Citations
