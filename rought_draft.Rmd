@@ -3,15 +3,20 @@ title: "RoughDraft"
 output: html_document
 ---
 
-##Abstract
-##Introduction
+## Abstract
+-- Will be written last --
+
+## Introduction
 As the year comes to a close, Washington D.C. is marking the end of the 115th Congress (2017-2018) and the halfway point of President Donald Trump's first term. There seems to be perception by the public that Congress is more partisan than ever, but is this really true? Inspired by Fowler's work on Congressional Cosponsorship Data, we set out to determine how divided Congress really is. In order to have a manageable sample size, we use the cosponsorship data of (n bills) in the Senate during the 1115h Congress. How much cosponsorship goes on between or within parties and who seems to be facilitating this? Do Senatorial Caucuses help explain who tends to sponsor with whomst? These are the questions that we set out to answer. 
 
-##Data
+## Data
 We obtained our data through multiple sources. All data relating to cosponsorship of bills for the 115th Congress were obtained from Legiscan.com, a website dedicated to real-time tracking of legislation moving through both houses of Congress. Through this site, we were able to download and manipulate a series of data sets that would go on to comprise our primary adjacency matrix; this series of data sets included information on each bill (name, ID, topic, committee, etc.) and cosponsor (name, ID, etc.). Joining these sets together, we produced a comprehensive list of every senator who has cosponsored a bill in the 115th Congress. We collected attributes including age, party, state represented, and the number of bills sponsered and cosponsered for each senator from Wikipedia and Congress.gov, then used this information to form our own data file and, eventually, an object containing nodal attributes for our networks.
 
-##Methods
+## Methods
+
 ### Completed already
+
+--Kara--
 
 ### What we'd like to do moving forward
 Partisanship is inherently a question of whether observable communities or groups within a greater network can be readily identified, and whether those groups are divisible along party lines. Therefore, our focus going forward will be first and foremost on constructing a workable SBM model, which will allow us to observe and interpret a model grounded on the idea that group divisions are a defining feature of social network models. 
@@ -22,8 +27,8 @@ After we acheive an interpretable SBM and are able to evaluate the information t
 To construct these models will be all well and good, but if we seek to discuss network topology in any kind of meaningful way, we have determined that it will be necessary to take a sample of our total set of cosponsered bills and proceed to visualize them. These samples will likely incorporate something close to 10% of the total bill volume in our current adjacency matrix (10% is generally recognized as the level at which a sample is able to be generalized as a representation of a greater population). Vizualizing a series (~3) of these networks will allow us to use algorithmic approaches to detect the presence of communities within them and to make comments on the impact that various nodal characteristics appear to have on community formation as a whole.
 
 
-##Results
+## Results
 The way that we approached this project was fairly inefficient, where data collection is concerned. First and foremost, we were inspired by a paper by James Fowler on social network analysis of groups in Congress, and anticipated that the data he had used, or the repositories that had previously provided him access to the necessary information, would be updated to include bills from the 115th Congress, as it was our goal to incorporste Fowler's methods into a study of the most recent data available. Unfortunately, it was extremely difficult to find the necessary data in accessible, free, or otherwise reasonably usable formats, and this ate up a gigantic chunk of our time during the beginning of this project. As such, production of actual results has been slow going. Now that we have the data and have formulated it into a proper adjancency matrix, we anticipate that progress will increase at a steady pace. However, for the time being, we will be focusing our energy most closely on refining our methodological approaches and will report on any relevant results at a later time.
 
-##Discussion
+## Discussion
 --Stay tuned!--
