@@ -13,6 +13,7 @@ library(readr)
 library(sna)
 library(ggplot2)
 library(mosaic)
+install.packages("blockmodels")
 library(blockmodels)
 
 bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
@@ -24,7 +25,7 @@ bill_sponsers_data <- bill_sponsers_data %>%
 node_characteristics <- read_csv("node_characteristics.csv")
 ```
 
-``` {r}
+```{r creating matrix}
 split_name <- str_split_fixed(node_characteristics$Name, " ", 3)
   
 node_characteristics <- node_characteristics %>%
@@ -74,7 +75,6 @@ mat[cosponsors%in%(names_people), cosponsors%in%(names_people)] <- mat[cosponsor
 diag(mat)<-0
 
 
-<<<<<<< HEAD
 attempt <- function(bill_num){
   filter(short_sponsors$bill_number == bill_num)
   cosponsors <- c(short_sponsors$name)
@@ -87,7 +87,8 @@ diag(mat)<-0
 
 ```
 
-```{r}
+
+```{r plotting matrix}
 sponser_matrix_full <- as.matrix(mat)
 sponser_matrix <- as.matrix(mat)
 upper.tri(sponser_matrix, diag = TRUE)
@@ -114,7 +115,7 @@ node_characteristics_final <- node_characteristics_final %>%
   mutate(PartC = ifelse())
 ```
 
-```{r}
+```{r SBM}
 sbm_attempt <- BM_bernoulli("SBM", sponser_matrix_full)
 sbm_attempt2 <- BM_bernoulli(
     "SBM", 
