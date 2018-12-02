@@ -98,7 +98,8 @@ sponser_matrix[upper.tri(sponser_matrix)] <- NA
 x <- cbind(which(!is.na(sponser_matrix), arr.ind = TRUE), na.omit(as.vector(sponser_matrix)))
 weighteddf <- as.data.frame(x)
 
-
+ggplot(weighteddf, aes(x = V3)) +
+  geom_histogram()
 
 attempt1 <- graph.adjacency(sponser_matrix, mode = "undirected", weighted = TRUE)
 plot(attempt1)
