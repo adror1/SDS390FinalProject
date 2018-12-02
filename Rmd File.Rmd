@@ -136,3 +136,18 @@ sbm_attempt$memberships[[num.clusters]]$plot() #plots the group memberships
 
 sbm_attempt2
 ```
+
+```{r, message = FALSE, warning = FALSE, ERGM}
+library(ergm)
+
+ergm_net <- network(sponser_matrix_full, vertex.attr = node_characteristics_final, vertex.attrnames = colnames(node_characteristics_final), directed = F)
+
+sponsor_base <- ergm(ergm_net ~ edges)
+plot(simulate(sponsor_base))
+plot(ergm_net)
+
+sponsor_complex <- ergm(ergm_net~ nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + degree(2))
+plot(simulate(sponsor_complex))
+gof(sponsor_complex)
+
+```
