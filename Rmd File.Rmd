@@ -104,9 +104,14 @@ fsponser_matrix[upper.tri(fsponser_matrix)] <- NA
 x <- cbind(which(!is.na(sponser_matrix), arr.ind = TRUE), na.omit(as.vector(sponser_matrix)))
 weighteddf <- as.data.frame(x)
 
+<<<<<<< HEAD
 sponser_matrixg <- graph.adjacency(sponser_matrix, mode = "undirected", weighted = TRUE)
 
 plot(sponser_matrixg, layout=layout.fruchterman.reingold)
+=======
+ggplot(weighteddf, aes(x = V3)) +
+  geom_histogram()
+>>>>>>> 36f5b29a9965ed6733b85ee79ba62e45df7eed0a
 
 plot(sponser_matrixg, weights = node_characteristics_final$Weight)
 
@@ -176,4 +181,19 @@ num.clusters<-3
 sbm_attempt$memberships[[num.clusters]]$plot() #plots the group memberships
 
 sbm_attempt2
+```
+
+```{r, message = FALSE, warning = FALSE, ERGM}
+library(ergm)
+
+ergm_net <- network(sponser_matrix_full, vertex.attr = node_characteristics_final, vertex.attrnames = colnames(node_characteristics_final), directed = F)
+
+sponsor_base <- ergm(ergm_net ~ edges)
+plot(simulate(sponsor_base))
+plot(ergm_net)
+
+sponsor_complex <- ergm(ergm_net~ nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + degree(2))
+plot(simulate(sponsor_complex))
+gof(sponsor_complex)
+
 ```
