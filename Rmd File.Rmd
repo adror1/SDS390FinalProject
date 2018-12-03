@@ -13,7 +13,6 @@ library(readr)
 library(sna)
 library(ggplot2)
 library(mosaic)
-install.packages("blockmodels")
 library(blockmodels)
 
 bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
@@ -63,6 +62,7 @@ node_characteristics_final <- node_characteristics_final %>%
 mat<-diag(105) #check this :)
 
 diag(mat)<-0 
+
 for(n in unique(short_sponsors$bill_number)) {
   short_sponsors_temp <- short_sponsors %>%
    filter(bill_number == n)
@@ -89,31 +89,73 @@ diag(mat)<-0
 
 
 ```{r plotting matrix}
+set.seed(5)
 sponser_matrix_full <- as.matrix(mat)
 sponser_matrix <- as.matrix(mat)
 upper.tri(sponser_matrix, diag = TRUE)
 diag(sponser_matrix) <- NA
 sponser_matrix[upper.tri(sponser_matrix)] <- NA
 
+fsponser_matrix <- as.matrix(mat)
+upper.tri(fsponser_matrix, diag = TRUE)
+diag(fsponser_matrix) <- NA
+fsponser_matrix[upper.tri(fsponser_matrix)] <- NA
+
 x <- cbind(which(!is.na(sponser_matrix), arr.ind = TRUE), na.omit(as.vector(sponser_matrix)))
 weighteddf <- as.data.frame(x)
 
-
-
-attempt1 <- graph.adjacency(sponser_matrix, mode = "undirected", weighted = TRUE)
-plot(attempt1)
-
-plot(attempt1, layout=layout.fruchterman.reingold)
-
-plot(attempt1)
-
 sponser_matrixg <- graph.adjacency(sponser_matrix, mode = "undirected", weighted = TRUE)
+
+plot(sponser_matrixg, layout=layout.fruchterman.reingold)
 
 plot(sponser_matrixg, weights = node_characteristics_final$Weight)
 
-node_characteristics_final <- node_characteristics_final %>%
-  mutate(PartC = ifelse())
+#filtering out connections over 100
+fsponser_matrix[fsponser_matrix>100] <- 0
+fattempt1 <- graph.adjacency(fsponser_matrix, mode = "undirected", weighted = TRUE)
+
+summary(fattempt1)
+E(fattempt1)$weight
+plot(fattempt1, layout=layout.fruchterman.reingold)
+
+#internet trying 
+###
+write.csv(sponsermatrix_full2, "matrixfull2.csv")
+node_names <- node_characteristics_final %>%
+  select(firstLast)
+write.csv(node_names, "attributes.csv")
+mat1=read.csv("matrixfull2.csv",header=TRUE,row.names=1,check.names=FALSE)
+###
+sponsermatrix_full2 <- as.matrix(mat1)
+sponsermatrix_full2[sponsermatrix_full2>100] <- 0
+fattempt2 <- graph.adjacency(sponsermatrix_full2, mode="undirected", weighted = TRUE, diag=FALSE)
+#looking at the graph attributes
+summary(fattempt2)
+#looking at the weights
+E(fattempt2)$weight
+
+plot.igraph(fattempt2,layout=layout.fruchterman.reingold, edge.color="black",edge.width=E(fattempt2)$weight) #hmm
+
+#node characteristics
+V(fattempt2)$Gender=as.character(node_characteristics_final$Gender[match(V(fattempt2)$name, node_characteristics_final$firstLast)]) #for this to work, we need to name the rows and columns of our matrix. i think i can do that. see above
+
+V(fattempt2)$Gender
+
+V(fattempt2)$color= V(fattempt2)$Gender
+V(fattempt2)$color=gsub("F","red",V(fattempt2)$color)
+V(fattempt2)$color=gsub("M","blue",V(fattempt2)$color)
+
+plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold, edge.color="black",edge.width=E(fattempt2)$weight)
+
 ```
+
+
+```{r}
+
+```
+
+
+
 
 ```{r SBM}
 sbm_attempt <- BM_bernoulli("SBM", sponser_matrix_full)
