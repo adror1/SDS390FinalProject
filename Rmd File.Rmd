@@ -214,6 +214,8 @@ sbm_attempt2
 ```{r, message = FALSE, warning = FALSE, ERGM}
 library(ergm)
 
+## how does the weighted nature of the matrix impact how we interpret the model? probably easier with binary indicators. 
+## do men cosponsor more bills overall? Adjust for nodes being male, white, old, etc.
 ergm_net <- network(sponser_matrix_full, vertex.attr = node_characteristics_final, vertex.attrnames = colnames(node_characteristics_final), directed = F)
 
 sponsor_base <- ergm(ergm_net ~ edges)
