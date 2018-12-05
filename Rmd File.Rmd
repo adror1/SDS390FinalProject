@@ -104,14 +104,12 @@ fsponser_matrix[upper.tri(fsponser_matrix)] <- NA
 x <- cbind(which(!is.na(sponser_matrix), arr.ind = TRUE), na.omit(as.vector(sponser_matrix)))
 weighteddf <- as.data.frame(x)
 
-<<<<<<< HEAD
+
 sponser_matrixg <- graph.adjacency(sponser_matrix, mode = "undirected", weighted = TRUE)
 
 plot(sponser_matrixg, layout=layout.fruchterman.reingold)
-=======
 ggplot(weighteddf, aes(x = V3)) +
   geom_histogram()
->>>>>>> 36f5b29a9965ed6733b85ee79ba62e45df7eed0a
 
 plot(sponser_matrixg, weights = node_characteristics_final$Weight)
 
@@ -218,21 +216,55 @@ library(ergm)
 ## do men cosponsor more bills overall? Adjust for nodes being male, white, old, etc.
 
 ergm_mat <- as.matrix((as.data.frame(sponser_matrix_full)>0) + 0)
-ergm_node_att <- node_characteristics_final %>%
-  mutate(gen_num = ifelse(Gender == "M", 0, 1)) %>%
-  mutate(race_num = ifelse(Race == "White", 0, 1)) %>%
-  mutate(party_num = ifelse(Party == "Republican", 0, 1))
 
-ergm_net <- network(ergm_mat, vertex.attr = ergm_node_att, 
+ergm_igraph <- graph_from_adjacency_matrix(ergm_mat, mode = "undirected", weighted = NULL, add.colnames = TRUE, add.rownames = TRUE)
+
+ergm_net <- network(ergm_mat, vertex.attr = ergm_node_att,
                     vertex.attrnames = colnames(ergm_node_att), directed = F)
 
-sponsor_base <- ergm(ergm_net ~ edges)
-plot(simulate(sponsor_base))
-plot(ergm_net)
+igraph_ob <- asIgraph(ergm_net)
+V(igraph_ob)$color <- ifelse(igraph_ob$Gender == "F", "pink", "blue") 
 
-sponsor_complex <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age"))
-summary(sponsor_complex)
-plot(simulate(sponsor_complex))
-gof(sponsor_complex)
+vertex.attributes(igraph_ob) <- list(gender = node_characteristics_final$Gender)
+
+plot(igraph_ob vertex.color = gender)
+
+plot(igraph_ob) %>%
+  set_vertex_attr("gender", value = ergm_net$Gender)
+
+# ergm_node_att <- node_characteristics_final %>%
+#   mutate(gen_num = ifelse(Gender == "M", 0, 1)) %>%
+#   mutate(race_num = ifelse(Race == "White", 0, 1)) %>%
+#   mutate(party_num = ifelse(Party == "Republican", 0, 1))
+# library(intergraph)
+# 
+# 
+# 
+# set.seed(3)
+# x <- sample.int(105, 20)
+# y <- sample.int(105, 20)
+# z <- sample.int(105, 20)
+# 
+# set.vertex.attribute(ergm_net, "gender", as.character(ergm_net$Gender))
+# 
+# gen.color<-rep("yellow", 105)
+# gen.color[ergm_net$Gender=="F"]<-"blue"
+# 
+# set.vertex.attribute(ergm_net, "gender.col", (gen.color))
+# 
+# plot(test, vertex.color = V(test)$gen.color)
+# 
+# test <- asIgraph(ergm_net)
+# test2 <- subgraph(test, y)
+# plot(test2) 
+# 
+# sponsor_base <- ergm(ergm_net ~ edges)
+# plot(simulate(sponsor_base))
+# plot(ergm_net)
+# 
+# sponsor_complex <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age"))
+# summary(sponsor_complex)
+# plot(simulate(sponsor_complex))
+# gof(sponsor_complex)
 
 ```
