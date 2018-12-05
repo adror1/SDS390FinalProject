@@ -217,7 +217,7 @@ library(ergm)
 
 ergm_mat <- as.matrix((as.data.frame(sponser_matrix_full)>0) + 0)
 
-ergm_igraph <- graph_from_adjacency_matrix(ergm_mat, mode = "undirected", weighted = NULL, add.colnames = TRUE, add.rownames = TRUE)
+# ergm_igraph <- graph_from_adjacency_matrix(ergm_mat, mode = "undirected", weighted = NULL, add.colnames = TRUE, add.rownames = TRUE)
 
 ergm_net <- network(ergm_mat, vertex.attr = ergm_node_att,
                     vertex.attrnames = colnames(ergm_node_att), directed = F)
@@ -225,12 +225,9 @@ ergm_net <- network(ergm_mat, vertex.attr = ergm_node_att,
 igraph_ob <- asIgraph(ergm_net)
 V(igraph_ob)$color <- ifelse(igraph_ob$Gender == "F", "pink", "blue") 
 
-vertex.attributes(igraph_ob) <- list(gender = node_characteristics_final$Gender)
+vertex_attr(igraph_ob)
+plot(igraph_ob, vertex.color = ifelse(V(igraph_ob)$Gender == "F", "pink", "blue"))
 
-plot(igraph_ob vertex.color = gender)
-
-plot(igraph_ob) %>%
-  set_vertex_attr("gender", value = ergm_net$Gender)
 
 # ergm_node_att <- node_characteristics_final %>%
 #   mutate(gen_num = ifelse(Gender == "M", 0, 1)) %>%
