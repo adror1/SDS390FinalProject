@@ -255,7 +255,7 @@ sponsor_base <- ergm(ergm_net ~ edges)
 plot(simulate(sponsor_base))
 plot(ergm_net)
 
-sponsor_complex <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age"))
+sponsor_complex <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age") + gwesp(0, fixed = TRUE))
 summary(sponsor_complex)
 plot(simulate(sponsor_complex))
 complex_gof <- gof(sponsor_complex)
