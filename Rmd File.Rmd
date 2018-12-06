@@ -219,8 +219,8 @@ ergm_mat <- as.matrix((as.data.frame(sponser_matrix_full)>0) + 0)
 
 # ergm_igraph <- graph_from_adjacency_matrix(ergm_mat, mode = "undirected", weighted = NULL, add.colnames = TRUE, add.rownames = TRUE)
 
-ergm_net <- network(ergm_mat, vertex.attr = ergm_node_att,
-                    vertex.attrnames = colnames(ergm_node_att), directed = F)
+ergm_net <- network(ergm_mat, vertex.attr = node_characteristics_final,
+                    vertex.attrnames = colnames(node_characteristics_final), directed = F)
 
 igraph_ob <- asIgraph(ergm_net)
 
@@ -229,9 +229,15 @@ plot(igraph_ob, vertex.color = ifelse(V(igraph_ob)$Gender == "F", "pink", "blue"
 
 set.seed(3)
 
-x <- sample(1:vcount(igraph_ob), 20)
+x <- sample(1:vcount(igraph_ob), 50)
 y <- sample(1:vcount(igraph_ob), 20)
 z <- sample(1:vcount(igraph_ob), 20)
+
+## pull samples to run ergm on
+samp1 <- subgraph(igraph_ob, which(V(igraph_ob) %in% x))
+samp1_network <- asNetwork(samp1)
+samp1_ergm <- ergm(samp1_network~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age") + gwesp(0, fixed = TRUE))
+summary(samp1_ergm)
 
 subgraph_function <- function(sub_arg){
   gen_plot <- induced.subgraph(igraph_ob, sub_arg) 
