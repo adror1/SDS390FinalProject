@@ -227,18 +227,29 @@ igraph_ob <- asIgraph(ergm_net)
 vertex_attr(igraph_ob)
 plot(igraph_ob, vertex.color = ifelse(V(igraph_ob)$Gender == "F", "pink", "blue"))
 
-vert <- sample(1:vcount(igraph_ob), 20)
-vert2 <- sample(1:vcount(igraph_ob), 20)
-
 set.seed(3)
 
 x <- sample(1:vcount(igraph_ob), 20)
+y <- sample(1:vcount(igraph_ob), 20)
+z <- sample(1:vcount(igraph_ob), 20)
 
-gen_plot <- induced.subgraph(igraph_ob, x) 
-                             
-                             V(igraph_ob)[vert2])
+subgraph_function <- function(sub_arg){
+  gen_plot <- induced.subgraph(igraph_ob, sub_arg) 
+  plot(gen_plot, vertex.color = ifelse(V(igraph_ob)$Gender[sub_arg] == "F", "purple", "yellow"), vertex.label = V(igraph_ob)$Gender[sub_arg])
+}
 
-plot(gen_plot, vertex.color = ifelse(V(igraph_ob)$Gender[x] == "F", "purple", "yellow"), vertex.label = V(igraph_ob)$Gender[x])
+
+subgraph_function(x)
+subgraph_function(y)
+subgraph_function(z)
+
+in_vert <- delete.vertices(ergm_net, V(asIgraph(ergm_net))[degree(ergm_net)>100])
+plot(in_vert)
+
+in_vert <- 
+as_adjacency_matrix(asIgraph(in_vert))
+
+# plot(gen_plot, vertex.color = ifelse(V(igraph_ob)$Gender[y] == "F", "purple", "yellow"), vertex.label = V(igraph_ob)$Gender[])
 
 sponsor_base <- ergm(ergm_net ~ edges)
 plot(simulate(sponsor_base))
@@ -247,7 +258,8 @@ plot(ergm_net)
 sponsor_complex <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age"))
 summary(sponsor_complex)
 plot(simulate(sponsor_complex))
-gof(sponsor_complex)
+complex_gof <- gof(sponsor_complex)
+summary(complex_gof)
 
 
 ```
