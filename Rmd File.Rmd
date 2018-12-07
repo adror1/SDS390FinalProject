@@ -155,8 +155,9 @@ V(fattempt2)$color=gsub("M","blue",V(fattempt2)$color)
 
 plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold, edge.color="black",edge.width=E(fattempt2)$weight)
 
-V(fattempt2)$size= igraph::degree(fattempt2)*0.05  
-plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold)
+V(fattempt2)$size= igraph::degree(fattempt2)*0.07  
+
+plot.igraph(fattempt2,layout=layout.fruchterman.reingold)
 
 
 ```
