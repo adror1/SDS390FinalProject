@@ -150,9 +150,8 @@ V(fattempt2)$color=gsub("M","blue",V(fattempt2)$color)
 
 plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold, edge.color="black",edge.width=E(fattempt2)$weight)
 
-V(fattempt2)$size= igraph::degree(fattempt2)*0.07  
-
-plot.igraph(fattempt2,layout=layout.fruchterman.reingold)
+V(fattempt2)$size= igraph::degree(fattempt2)*0.05  
+plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold)
 
 
 ```
@@ -235,7 +234,7 @@ y <- sample(1:vcount(igraph_ob), 20)
 z <- sample(1:vcount(igraph_ob), 20)
 
 ## pull samples to run ergm on
-samp1 <- subgraph(igraph_ob, which(V(igraph_ob) %in% x))
+samp1 <- subgraph(igraph_ob, which(V(igraph_ob) %in% y))
 samp1_network <- asNetwork(samp1)
 samp1_ergm <- ergm(samp1_network~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age") + gwesp(0, fixed = TRUE))
 summary(samp1_ergm)
@@ -262,7 +261,7 @@ sponsor_base <- ergm(ergm_net ~ edges)
 plot(simulate(sponsor_base))
 plot(ergm_net)
 
-sponsor_complex <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age") + gwesp(0, fixed = TRUE))
+sponsor_complex <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age"))
 summary(sponsor_complex)
 plot(simulate(sponsor_complex))
 complex_gof <- gof(sponsor_complex)
