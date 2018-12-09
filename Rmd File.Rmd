@@ -14,6 +14,8 @@ library(sna)
 library(ggplot2)
 library(mosaic)
 library(blockmodels)
+library(ergm)
+library(intergraph)
 
 bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
 length(unique(bill_sponsers_data$bill_number))
@@ -153,6 +155,25 @@ plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold, edge.c
 V(fattempt2)$size= igraph::degree(fattempt2)*0.05  
 plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold)
 
+#graph sample
+net1 <- network(sponser_matrix_full, vertex.attr = node_characteristics_final,
+                    vertex.attrnames = colnames(node_characteristics_final), directed = F)
+
+igraphnet <- asIgraph(net1)
+ 
+
+vertex_attr(igraphnet)
+plot(igraphnet, vertex.color = ifelse(V(igraphnet)$Gender == "F", "pink", "blue"))
+```
+
+```{r}
+set.seed(55)
+sampled <- sample(1:vcount(igraphnet), 25)
+
+## pull samples to plot random sampled 
+samplegraph <- subgraph(igraphnet, which(V(igraphnet) %in% sampled))
+
+plot(samplegraph,vertex.color = ifelse(V(igraphnet)$Gender == "F", "pink", "blue"))
 
 ```
 
@@ -211,7 +232,7 @@ sbm_attempt2
 
 ```{r, message = FALSE, warning = FALSE, ERGM}
 library(ergm)
-
+library(intergraph)
 ## how does the weighted nature of the matrix impact how we interpret the model? probably easier with binary indicators. 
 ## do men cosponsor more bills overall? Adjust for nodes being male, white, old, etc.
 
