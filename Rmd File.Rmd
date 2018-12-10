@@ -14,9 +14,8 @@ library(sna)
 library(ggplot2)
 library(mosaic)
 library(blockmodels)
-library(ergm)
-library(intergraph)
-
+library(ggthemes)
+library(ggsci)
 bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
 length(unique(bill_sponsers_data$bill_number))
 
@@ -157,28 +156,10 @@ V(fattempt2)$color=gsub("M","blue",V(fattempt2)$color)
 
 plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold, edge.color="black",edge.width=E(fattempt2)$weight)
 
-V(fattempt2)$size= igraph::degree(fattempt2)*0.05  
-plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold)
+V(fattempt2)$size= igraph::degree(fattempt2)*0.07  
 
-#graph sample
-net1 <- network(sponser_matrix_full, vertex.attr = node_characteristics_final,
-                    vertex.attrnames = colnames(node_characteristics_final), directed = F)
+plot.igraph(fattempt2,layout=layout.fruchterman.reingold)
 
-igraphnet <- asIgraph(net1)
- 
-
-vertex_attr(igraphnet)
-plot(igraphnet, vertex.color = ifelse(V(igraphnet)$Gender == "F", "pink", "blue"))
-```
-
-```{r}
-set.seed(55)
-sampled <- sample(1:vcount(igraphnet), 25)
-
-## pull samples to plot random sampled 
-samplegraph <- subgraph(igraphnet, which(V(igraphnet) %in% sampled))
-
-plot(samplegraph,vertex.color = ifelse(V(igraphnet)$Gender == "F", "pink", "blue"))
 
 ```
 
@@ -202,16 +183,15 @@ my_model$memberships[[num.clusters]]$plot() #plots the group memberships
 sbm_attempt2 <- BM_poisson(
     "SBM",
     sponser_matrix_full,
-    verbosity=0,
-    autosave='',
-    plotting=character(0),
+    verbosity=6,
+    plotting="icl_plots.pdf",
     exploration_factor=1.5,
     explore_min=2,
-    explore_max=20,
+    explore_max = 20,
     ncores=detectCores())
 sbm_attempt2$estimate()
 which.max(sbm_attempt2$ICL)
-num.clusters<-14
+num.clusters<-11
 
 output_sbm <- sbm_attempt2$memberships[[num.clusters]]$Z #gives probability of being in each group
 sbm_attempt2$memberships[[num.clusters]]$plot() #plots the group memberships
@@ -243,14 +223,35 @@ sbm_output.df <- sbm_output.df %>%
   left_join(senate_ideology, by = c("last_name" = "name")) %>%
   arrange(class)
 
+sbm_output_med <- sbm_output.df %>%
+  na.omit() %>%
+  group_by(class) %>%
+  mutate(class_med = round(median(ideology), 2))
+
+summarise_overall <- sbm_output_med %>%
+  ungroup() %>%
+  summarise(median(class_med),
+            mean(class_med))
 
 
+ggplot(sbm_output_med, aes(x = class, y = ideology, group = class, fill = class_med)) +
+  geom_boxplot() +
+  geom_point() +
+  scale_x_continuous(breaks = c(1:11)) +
+  scale_fill_gsea() +
+  theme_minimal() +
+  labs(title = "Ideology of Senate Candidates by SBM Groupings", 
+          x = "Group", 
+          y = "Ideology") +
+  geom_text(data = sbm_output_med, aes(x = class, y = class_med, label = class_med), 
+              size = 3, vjust = -0.5, color = "white") +
+  guides(fill = FALSE)
 
 ```
 
 ```{r, message = FALSE, warning = FALSE, ERGM}
 library(ergm)
-library(intergraph)
+
 ## how does the weighted nature of the matrix impact how we interpret the model? probably easier with binary indicators. 
 ## do men cosponsor more bills overall? Adjust for nodes being male, white, old, etc.
 
@@ -273,7 +274,7 @@ y <- sample(1:vcount(igraph_ob), 20)
 z <- sample(1:vcount(igraph_ob), 20)
 
 ## pull samples to run ergm on
-samp1 <- subgraph(igraph_ob, which(V(igraph_ob) %in% y))
+samp1 <- subgraph(igraph_ob, which(V(igraph_ob) %in% x))
 samp1_network <- asNetwork(samp1)
 samp1_ergm <- ergm(samp1_network~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age") + gwesp(0, fixed = TRUE))
 summary(samp1_ergm)
@@ -300,7 +301,7 @@ sponsor_base <- ergm(ergm_net ~ edges)
 plot(simulate(sponsor_base))
 plot(ergm_net)
 
-sponsor_complex <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age"))
+sponsor_complex <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age") + gwesp(0, fixed = TRUE))
 summary(sponsor_complex)
 plot(simulate(sponsor_complex))
 complex_gof <- gof(sponsor_complex)
