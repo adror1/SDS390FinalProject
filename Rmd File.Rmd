@@ -14,9 +14,8 @@ library(sna)
 library(ggplot2)
 library(mosaic)
 library(blockmodels)
-library(ergm)
-library(intergraph)
-
+library(ggthemes)
+library(ggsci)
 bill_sponsers_data <- read_csv("bill_sponsers_data.csv")
 length(unique(bill_sponsers_data$bill_number))
 
@@ -24,6 +23,11 @@ bill_sponsers_data <- bill_sponsers_data %>%
   mutate(sponsor = ifelse(position == 1, TRUE, FALSE))
 
 node_characteristics <- read_csv("node_characteristics.csv")
+
+senate_ideology <- read_csv("govtrack-stats-2017-senate-ideology.csv")
+
+
+
 ```
 
 ```{r creating matrix}
@@ -116,7 +120,7 @@ ggplot(weighteddf, aes(x = V3)) +
 plot(sponser_matrixg, weights = node_characteristics_final$Weight)
 
 #filtering out connections over 100
-fsponser_matrix[fsponser_matrix>100] <- 0
+fsponser_matrix[fsponser_matrix<25] <- 0
 fattempt1 <- graph.adjacency(fsponser_matrix, mode = "undirected", weighted = TRUE)
 
 summary(fattempt1)
@@ -125,14 +129,19 @@ plot(fattempt1, layout=layout.fruchterman.reingold)
 
 #internet trying 
 ###
-write.csv(sponsermatrix_full2, "matrixfull2.csv")
+write.csv(sponser_matrix_full, "matrixfull2.csv")
 node_names <- node_characteristics_final %>%
   select(firstLast)
 write.csv(node_names, "attributes.csv")
 mat1=read.csv("matrixfull2.csv",header=TRUE,row.names=1,check.names=FALSE)
 ###
 sponsermatrix_full2 <- as.matrix(mat1)
-sponsermatrix_full2[sponsermatrix_full2>100] <- 0
+
+order1 <- c("Tammy Baldwin","Dianne Feinstein","Sheldon Whitehouse","Elizabeth Warren","Bill Nelson","Claire McCaskill","Thomas Carper","Jon Tester","Brian Schatz","Tammy Duckworth","Chris Van Hollen"," Joe Manchin", "Michael Bennet","Richard Blumenthal","Edward Markey","Christopher Murphy","Kirsten Gillibrand","Robert Menendez","Debbie Stabenow","Ron Wyden","Jeanne Shaheen","Patrick Leahy","Maria Cantwell","Benjamin Cardin","Jeff Merkley","Tom Udall","Al Franken","Christopher Coons","Tim Kaine","Cory Booker","Kamala Harris","Martin Heinrich","Gary Peters","Sherrod Brown","Robert Casey","Richard Durbin","Amy Klobuchar","Patty Murray","Heidi Heitkamp","Tina Smith","Charles Schumer","Mazie Hirono","Jack Reed","Joe Donnelly","Catherine Cortez Masto","Doug Jones","Mark Warner","Maggie Hassan","Bernard Sanders","Angus King","John Thune","Jerry Moran","Johnny Isakson","James Inhofe","James Lankford","David Perdue","Dean Heller","John Boozman","Shelley Capito","Roy Blunt","John Barrasso","Chuck Grassley","James Risch","Cory Gardner","Tim Scott","Todd Young","Rand Paul","Mike Lee","Marco Rubio","Rob Portman","Steve Daines","John Cornyn","Orrin Hatch","Pat Toomey","Ron Johnson","Tom Cotton","Ted Cruz","John McCain","Michael Enzi","Joni Ernst","Ben Sasse","Thom Tillis","Richard Burr","Bill Cassidy","Jeff Flake","Mike Crapo","Pat Roberts","Roger Wicker","Deb Fischer","Mike Rounds","Dan Sullivan","John Kennedy","Luther Strange","Cindy Hyde-Smith","Susan Collins","Jeff Sessions","Thad Cochran","Lisa Murkowski","Mitch McConnell","Richard Shelby","Lindsey Graham","Lamar Alexander","Bob Corker","John Hoeven","Jon Kyl")
+
+sponsermatrix_full2[,as.character(order1)]
+
+#sponsermatrix_full2[sponsermatrix_full2>100] <- 0
 fattempt2 <- graph.adjacency(sponsermatrix_full2, mode="undirected", weighted = TRUE, diag=FALSE)
 #looking at the graph attributes
 summary(fattempt2)
@@ -146,15 +155,30 @@ V(fattempt2)$Gender=as.character(node_characteristics_final$Gender[match(V(fatte
 
 V(fattempt2)$Gender
 
-V(fattempt2)$color= V(fattempt2)$Gender
-V(fattempt2)$color=gsub("F","red",V(fattempt2)$color)
-V(fattempt2)$color=gsub("M","blue",V(fattempt2)$color)
+#V(fattempt2)$color= V(fattempt2)$Gender
+#V(fattempt2)$color=gsub("F","red",V(fattempt2)$color)
+#V(fattempt2)$color=gsub("M","blue",V(fattempt2)$color)
 
-plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold, edge.color="black",edge.width=E(fattempt2)$weight)
+#plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold, edge.color="black",edge.width=E(fattempt2)$weight)
 
-V(fattempt2)$size= igraph::degree(fattempt2)*0.05  
-plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold)
 
+V(fattempt2)$Party=as.character(node_characteristics_final$Party[match(V(fattempt2)$name, node_characteristics_final$firstLast)])
+
+V(fattempt2)$color= V(fattempt2)$Party
+V(fattempt2)$color=gsub("Democratic","Blue",V(fattempt2)$color)
+V(fattempt2)$color=gsub("Republican","Red",V(fattempt2)$color)
+V(fattempt2)$color=gsub("Independent","Yellow",V(fattempt2)$color)
+
+#hist(E(fattempt2)$weight ) 
+
+
+V(fattempt2)$label=V(fattempt2)
+
+plot(fattempt2, vertex.label.cex=.70, vertex.size = 10, layout= layout_in_circle, edge.width= (E(fattempt2)$weight>100), vertex.color = V(fattempt2)$color)
+
+plot(fattempt2)
+
+<<<<<<< HEAD
 #graph sample
 net1 <- network(sponser_matrix_full, vertex.attr = node_characteristics_final,
                     vertex.attrnames = colnames(node_characteristics_final), directed = F)
@@ -164,17 +188,41 @@ igraphnet <- asIgraph(net1)
 
 vertex_attr(igraphnet)
 plot(igraphnet, vertex.color = ifelse(V(igraphnet)$Gender == "F", "pink", "blue"))
+
+histogram(node_characteristics_final$Weight)
+```
+```{r}
+#new try
+top25 <- node_characteristics_final %>%
+  mutate(bills = as.numeric("Number of bills cosponsered") + as.numeric("Number of bills sponsered")) %>%
+  arrange(desc(bills)) %>%
+  top_n(25, bills)
 ```
 
 ```{r}
-set.seed(55)
-sampled <- sample(1:vcount(igraphnet), 25)
+#743
+#92
+#70
+set.seed(743)
+summary(fattempt2)
+
+sampled <- sample.int(vcount(fattempt2), 25)
+
 
 ## pull samples to plot random sampled 
-samplegraph <- subgraph(igraphnet, which(V(igraphnet) %in% sampled))
+samplegraph <- subgraph(fattempt2, sampled)
 
-plot(samplegraph,vertex.color = ifelse(V(igraphnet)$Gender == "F", "pink", "blue"))
+V(fattempt2)$Party=as.character(node_characteristics_final$Party[match(V(fattempt2)$name, node_characteristics_final$firstLast)])
 
+V(fattempt2)$color= V(fattempt2)$Party
+V(fattempt2)$color=gsub("Democratic","Blue",V(fattempt2)$color)
+V(fattempt2)$color=gsub("Republican","Red",V(fattempt2)$color)
+V(fattempt2)$color=gsub("Independent","Yellow",V(fattempt2)$color)
+V(fattempt2)$label=V(fattempt2)
+=======
+>>>>>>> 9060f04f4e0110d9da0f5e3acccffdf8a41e676a
+
+plot(samplegraph, vertex.label.cex=.75, vertex.size = 10)
 ```
 
 
@@ -194,20 +242,18 @@ num.clusters<-3
 my_model$memberships[[num.clusters]]$Z #gives probability of being in each group
 my_model$memberships[[num.clusters]]$plot() #plots the group memberships
 
-sbm_attempt <- BM_bernoulli("SBM", sponser_matrix_full)
 sbm_attempt2 <- BM_poisson(
     "SBM",
     sponser_matrix_full,
-    verbosity=4,
-    autosave='',
-    plotting=character(0),
+    verbosity=6,
+    plotting="icl_plots.pdf",
     exploration_factor=1.5,
     explore_min=2,
-    explore_max=20,
+    explore_max = 20,
     ncores=detectCores())
 sbm_attempt2$estimate()
 which.max(sbm_attempt2$ICL)
-num.clusters<-14
+num.clusters<-11
 
 output_sbm <- sbm_attempt2$memberships[[num.clusters]]$Z #gives probability of being in each group
 sbm_attempt2$memberships[[num.clusters]]$plot() #plots the group memberships
@@ -216,23 +262,58 @@ sbm_attempt2$memberships[[num.clusters]]$plot() #plots the group memberships
 sbm_attempt2$PL
 sbm_attempt2$memberships
 
+pattern<-"Men"
+senate_ideology$name[grep(pattern, senate_ideology$name)]<-"b'Menendez'"
+
+senate_ideology <- senate_ideology %>%
+  mutate(name = gsub("'", replacement = "", name)) %>%
+  mutate(name = str_sub(name, 2)) %>%
+  select(name, ideology)
+
 output_sbm_max <- cbind(apply(output_sbm, 1, max), max.col(output_sbm))
 output_sbm_max <- cbind(output_sbm_max, node_characteristics_final$firstLast)
 output_sbm_max <- cbind(output_sbm_max, node_characteristics_final$Party)
 output_sbm_max <- cbind(output_sbm_max, node_characteristics_final$State)
 sbm_output.df <- as.data.frame(output_sbm_max)
 sbm_output.df <- setNames(sbm_output.df, c("probability", "class", "name", "party", "state")) %>%
-  mutate(class = as.numeric(class)) %>%
-  group_by(class) %>% 
+  mutate(class = as.numeric(class)) 
+sbm_name_split <- str_split(sbm_output.df$name, " ", 2)
+mat_names <- t(do.call("cbind",sbm_name_split))
+names.df <- as.data.frame(mat_names)
+sbm_output.df <- sbm_output.df %>%
+  mutate(last_name = names.df$V2) %>%
+  left_join(senate_ideology, by = c("last_name" = "name")) %>%
   arrange(class)
 
+sbm_output_med <- sbm_output.df %>%
+  na.omit() %>%
+  group_by(class) %>%
+  mutate(class_med = round(median(ideology), 2))
 
-sbm_attempt2
+summarise_overall <- sbm_output_med %>%
+  ungroup() %>%
+  summarise(median(class_med),
+            mean(class_med))
+
+
+ggplot(sbm_output_med, aes(x = class, y = ideology, group = class, fill = class_med)) +
+  geom_boxplot() +
+  geom_point() +
+  scale_x_continuous(breaks = c(1:11)) +
+  scale_fill_gsea() +
+  theme_minimal() +
+  labs(title = "Ideology of Senate Candidates by SBM Groupings", 
+          x = "Group", 
+          y = "Ideology") +
+  geom_text(data = sbm_output_med, aes(x = class, y = class_med, label = class_med), 
+              size = 3, vjust = -0.5, color = "white") +
+  guides(fill = FALSE)
+
 ```
 
 ```{r, message = FALSE, warning = FALSE, ERGM}
 library(ergm)
-library(intergraph)
+
 ## how does the weighted nature of the matrix impact how we interpret the model? probably easier with binary indicators. 
 ## do men cosponsor more bills overall? Adjust for nodes being male, white, old, etc.
 ### men more likely to cosponser, further away in age shows lower log odds of cosponsership
@@ -259,7 +340,7 @@ y <- sample(1:vcount(igraph_ob), 20)
 z <- sample(1:vcount(igraph_ob), 20)
 
 ## pull samples to run ergm on
-samp1 <- subgraph(igraph_ob, which(V(igraph_ob) %in% y))
+samp1 <- subgraph(igraph_ob, which(V(igraph_ob) %in% x))
 samp1_network <- asNetwork(samp1)
 samp1_ergm <- ergm(samp1_network~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age") + gwesp(0, fixed = TRUE))
 summary(samp1_ergm)
@@ -286,7 +367,7 @@ sponsor_base <- ergm(ergm_net ~ edges)
 plot(simulate(sponsor_base))
 plot(ergm_net)
 
-sponsor_complex <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age"))
+sponsor_complex <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age") + gwesp(0, fixed = TRUE))
 summary(sponsor_complex)
 plot(simulate(sponsor_complex))
 complex_gof <- gof(sponsor_complex)
