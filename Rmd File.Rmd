@@ -235,8 +235,12 @@ library(ergm)
 library(intergraph)
 ## how does the weighted nature of the matrix impact how we interpret the model? probably easier with binary indicators. 
 ## do men cosponsor more bills overall? Adjust for nodes being male, white, old, etc.
+### men more likely to cosponser, further away in age shows lower log odds of cosponsership
 
+mean_cosponsor <- mean(sponser_matrix_full)
 ergm_mat <- as.matrix((as.data.frame(sponser_matrix_full)>0) + 0)
+
+top_mat <- as.matrix((as.data.frame(sponser_matrix_full)>mean_cosponsor) + 0)
 
 # ergm_igraph <- graph_from_adjacency_matrix(ergm_mat, mode = "undirected", weighted = NULL, add.colnames = TRUE, add.rownames = TRUE)
 
@@ -288,5 +292,9 @@ plot(simulate(sponsor_complex))
 complex_gof <- gof(sponsor_complex)
 summary(complex_gof)
 
+
+sponsor_top <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age"))
+summary(sponsor_top)
+gof(sponsor_top)
 
 ```
