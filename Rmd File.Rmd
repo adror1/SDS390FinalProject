@@ -120,7 +120,7 @@ ggplot(weighteddf, aes(x = V3)) +
 plot(sponser_matrixg, weights = node_characteristics_final$Weight)
 
 #filtering out connections over 100
-fsponser_matrix[fsponser_matrix>100] <- 0
+fsponser_matrix[fsponser_matrix<25] <- 0
 fattempt1 <- graph.adjacency(fsponser_matrix, mode = "undirected", weighted = TRUE)
 
 summary(fattempt1)
@@ -129,14 +129,19 @@ plot(fattempt1, layout=layout.fruchterman.reingold)
 
 #internet trying 
 ###
-write.csv(sponsermatrix_full2, "matrixfull2.csv")
+write.csv(sponser_matrix_full, "matrixfull2.csv")
 node_names <- node_characteristics_final %>%
   select(firstLast)
 write.csv(node_names, "attributes.csv")
 mat1=read.csv("matrixfull2.csv",header=TRUE,row.names=1,check.names=FALSE)
 ###
 sponsermatrix_full2 <- as.matrix(mat1)
-sponsermatrix_full2[sponsermatrix_full2>100] <- 0
+
+order1 <- c("Tammy Baldwin","Dianne Feinstein","Sheldon Whitehouse","Elizabeth Warren","Bill Nelson","Claire McCaskill","Thomas Carper","Jon Tester","Brian Schatz","Tammy Duckworth","Chris Van Hollen"," Joe Manchin", "Michael Bennet","Richard Blumenthal","Edward Markey","Christopher Murphy","Kirsten Gillibrand","Robert Menendez","Debbie Stabenow","Ron Wyden","Jeanne Shaheen","Patrick Leahy","Maria Cantwell","Benjamin Cardin","Jeff Merkley","Tom Udall","Al Franken","Christopher Coons","Tim Kaine","Cory Booker","Kamala Harris","Martin Heinrich","Gary Peters","Sherrod Brown","Robert Casey","Richard Durbin","Amy Klobuchar","Patty Murray","Heidi Heitkamp","Tina Smith","Charles Schumer","Mazie Hirono","Jack Reed","Joe Donnelly","Catherine Cortez Masto","Doug Jones","Mark Warner","Maggie Hassan","Bernard Sanders","Angus King","John Thune","Jerry Moran","Johnny Isakson","James Inhofe","James Lankford","David Perdue","Dean Heller","John Boozman","Shelley Capito","Roy Blunt","John Barrasso","Chuck Grassley","James Risch","Cory Gardner","Tim Scott","Todd Young","Rand Paul","Mike Lee","Marco Rubio","Rob Portman","Steve Daines","John Cornyn","Orrin Hatch","Pat Toomey","Ron Johnson","Tom Cotton","Ted Cruz","John McCain","Michael Enzi","Joni Ernst","Ben Sasse","Thom Tillis","Richard Burr","Bill Cassidy","Jeff Flake","Mike Crapo","Pat Roberts","Roger Wicker","Deb Fischer","Mike Rounds","Dan Sullivan","John Kennedy","Luther Strange","Cindy Hyde-Smith","Susan Collins","Jeff Sessions","Thad Cochran","Lisa Murkowski","Mitch McConnell","Richard Shelby","Lindsey Graham","Lamar Alexander","Bob Corker","John Hoeven","Jon Kyl")
+
+sponsermatrix_full2[,as.character(order1)]
+
+#sponsermatrix_full2[sponsermatrix_full2>100] <- 0
 fattempt2 <- graph.adjacency(sponsermatrix_full2, mode="undirected", weighted = TRUE, diag=FALSE)
 #looking at the graph attributes
 summary(fattempt2)
@@ -150,17 +155,74 @@ V(fattempt2)$Gender=as.character(node_characteristics_final$Gender[match(V(fatte
 
 V(fattempt2)$Gender
 
-V(fattempt2)$color= V(fattempt2)$Gender
-V(fattempt2)$color=gsub("F","red",V(fattempt2)$color)
-V(fattempt2)$color=gsub("M","blue",V(fattempt2)$color)
+#V(fattempt2)$color= V(fattempt2)$Gender
+#V(fattempt2)$color=gsub("F","red",V(fattempt2)$color)
+#V(fattempt2)$color=gsub("M","blue",V(fattempt2)$color)
 
-plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold, edge.color="black",edge.width=E(fattempt2)$weight)
-
-V(fattempt2)$size= igraph::degree(fattempt2)*0.07  
-
-plot.igraph(fattempt2,layout=layout.fruchterman.reingold)
+#plot.igraph(fattempt2,vertex.label=NA,layout=layout.fruchterman.reingold, edge.color="black",edge.width=E(fattempt2)$weight)
 
 
+V(fattempt2)$Party=as.character(node_characteristics_final$Party[match(V(fattempt2)$name, node_characteristics_final$firstLast)])
+
+V(fattempt2)$color= V(fattempt2)$Party
+V(fattempt2)$color=gsub("Democratic","Blue",V(fattempt2)$color)
+V(fattempt2)$color=gsub("Republican","Red",V(fattempt2)$color)
+V(fattempt2)$color=gsub("Independent","Yellow",V(fattempt2)$color)
+
+#hist(E(fattempt2)$weight ) 
+
+
+V(fattempt2)$label=V(fattempt2)
+
+plot(fattempt2, vertex.label.cex=.70, vertex.size = 10, layout= layout_in_circle, edge.width= (E(fattempt2)$weight>100), vertex.color = V(fattempt2)$color)
+
+plot(fattempt2)
+
+<<<<<<< HEAD
+#graph sample
+net1 <- network(sponser_matrix_full, vertex.attr = node_characteristics_final,
+                    vertex.attrnames = colnames(node_characteristics_final), directed = F)
+
+igraphnet <- asIgraph(net1)
+ 
+
+vertex_attr(igraphnet)
+plot(igraphnet, vertex.color = ifelse(V(igraphnet)$Gender == "F", "pink", "blue"))
+
+histogram(node_characteristics_final$Weight)
+```
+```{r}
+#new try
+top25 <- node_characteristics_final %>%
+  mutate(bills = as.numeric("Number of bills cosponsered") + as.numeric("Number of bills sponsered")) %>%
+  arrange(desc(bills)) %>%
+  top_n(25, bills)
+```
+
+```{r}
+#743
+#92
+#70
+set.seed(743)
+summary(fattempt2)
+
+sampled <- sample.int(vcount(fattempt2), 25)
+
+
+## pull samples to plot random sampled 
+samplegraph <- subgraph(fattempt2, sampled)
+
+V(fattempt2)$Party=as.character(node_characteristics_final$Party[match(V(fattempt2)$name, node_characteristics_final$firstLast)])
+
+V(fattempt2)$color= V(fattempt2)$Party
+V(fattempt2)$color=gsub("Democratic","Blue",V(fattempt2)$color)
+V(fattempt2)$color=gsub("Republican","Red",V(fattempt2)$color)
+V(fattempt2)$color=gsub("Independent","Yellow",V(fattempt2)$color)
+V(fattempt2)$label=V(fattempt2)
+=======
+>>>>>>> 9060f04f4e0110d9da0f5e3acccffdf8a41e676a
+
+plot(samplegraph, vertex.label.cex=.75, vertex.size = 10)
 ```
 
 
@@ -255,8 +317,12 @@ library(ergm)
 
 ## how does the weighted nature of the matrix impact how we interpret the model? probably easier with binary indicators. 
 ## do men cosponsor more bills overall? Adjust for nodes being male, white, old, etc.
+### men more likely to cosponser, further away in age shows lower log odds of cosponsership
 
+mean_cosponsor <- mean(sponser_matrix_full)
 ergm_mat <- as.matrix((as.data.frame(sponser_matrix_full)>0) + 0)
+
+top_mat <- as.matrix((as.data.frame(sponser_matrix_full)>mean_cosponsor) + 0)
 
 # ergm_igraph <- graph_from_adjacency_matrix(ergm_mat, mode = "undirected", weighted = NULL, add.colnames = TRUE, add.rownames = TRUE)
 
@@ -308,5 +374,9 @@ plot(simulate(sponsor_complex))
 complex_gof <- gof(sponsor_complex)
 summary(complex_gof)
 
+
+sponsor_top <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age"))
+summary(sponsor_top)
+gof(sponsor_top)
 
 ```
