@@ -328,6 +328,10 @@ top_mat <- as.matrix((as.data.frame(sponser_matrix_full)>mean_cosponsor) + 0)
 ergm_net <- network(ergm_mat, vertex.attr = node_characteristics_final,
                     vertex.attrnames = colnames(node_characteristics_final), directed = F)
 
+top_net <- network(top_mat, vertex.attr = node_characteristics_final,
+                    vertex.attrnames = colnames(node_characteristics_final), directed = F)
+
+
 igraph_ob <- asIgraph(ergm_net)
 
 vertex_attr(igraph_ob)
@@ -367,15 +371,28 @@ sponsor_base <- ergm(ergm_net ~ edges)
 plot(simulate(sponsor_base))
 plot(ergm_net)
 
-sponsor_complex <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age") + gwesp(0, fixed = TRUE))
+sponsor_complex <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age"))
 summary(sponsor_complex)
 plot(simulate(sponsor_complex))
+gof(sponsor_complex)
 complex_gof <- gof(sponsor_complex)
 summary(complex_gof)
+plot(ergm_net)
 
 
-sponsor_top <- ergm(ergm_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age"))
+sponsor_top <- ergm(top_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age") + isolates + gwesp(decay = 1))
 summary(sponsor_top)
 gof(sponsor_top)
+
+sponsor_top_limited <- ergm(top_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age") + isolates)
+summary(sponsor_top_limited)
+gof(sponsor_top_limited)
+
+sponsor_top_og <- ergm(top_net~ nodefactor("Gender") + nodefactor("Race") + nodematch("Gender") + nodematch("Race") + absdiff("Age") + nodemix("Party") + nodecov("Age"))
+summary(sponsor_top_og)
+gof(sponsor_top_og)
+
+plot(simulate(sponsor_top))
+plot(top_net)
 
 ```
