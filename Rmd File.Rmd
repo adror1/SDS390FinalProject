@@ -296,7 +296,7 @@ summarise_overall <- sbm_output_med %>%
             mean(class_med))
 
 
-ggplot(sbm_output_med, aes(x = class, y = ideology, group = class, fill = class_med)) +
+sbm_graphic <- ggplot(sbm_output_med, aes(x = class, y = ideology, group = class, fill = class_med)) +
   geom_boxplot() +
   geom_point() +
   scale_x_continuous(breaks = c(1:11)) +
@@ -307,7 +307,8 @@ ggplot(sbm_output_med, aes(x = class, y = ideology, group = class, fill = class_
           y = "Ideology") +
   geom_text(data = sbm_output_med, aes(x = class, y = class_med, label = class_med), 
               size = 3, vjust = -0.5, color = "white") +
-  guides(fill = FALSE)
+  guides(fill = FALSE) + 
+  ggsave("sbm_graphic.jpg")
 
 ```
 
