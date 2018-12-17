@@ -34,6 +34,209 @@ To construct these models will be all well and good, but if we seek to discuss n
 ## Results
 The way that we approached this project was fairly inefficient, where data collection is concerned. First and foremost, we were inspired by a paper by James Fowler on social network analysis of groups in Congress, and anticipated that the data he had used, or the repositories that had previously provided him access to the necessary information, would be updated to include bills from the 115th Congress, as it was our goal to incorporate Fowler's methods into a study of the most recent data available. Unfortunately, it was extremely difficult to find the necessary data in accessible, free, or otherwise reasonably usable formats, and this ate up a gigantic chunk of our time during the beginning of this project. As such, production of actual results has been slow going. Now that we have the data and have formulated it into a proper adjacency matrix, we anticipate that progress will increase at a steady pace. However, for the time being, we will be focusing our energy most closely on refining our methodological approaches and will report on any relevant results at a later time.
 
+% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Mon, Dec 17, 2018 - 1:25:39 PM
+\begin{table}[!htbp] \centering 
+  \caption{Limtited Highly-weighted Model} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Term coefficients:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & top\_net \\ 
+\hline \\[-1.8ex] 
+ nodefactor.Gender.M & $-$0.301$^{***}$ \\ 
+  & (0.081) \\ 
+  & \\ 
+ nodefactor.Race.Asian & $-$1.528$^{***}$ \\ 
+  & (0.236) \\ 
+  & \\ 
+ nodefactor.Race.Hispanic & 0.526$^{***}$ \\ 
+  & (0.194) \\ 
+  & \\ 
+ nodefactor.Race.White & $-$0.114 \\ 
+  & (0.361) \\ 
+  & \\ 
+ nodematch.Gender & 0.053 \\ 
+  & (0.096) \\ 
+  & \\ 
+ nodematch.Race & $-$0.084 \\ 
+  & (0.359) \\ 
+  & \\ 
+ absdiff.Age & $-$0.010$^{**}$ \\ 
+  & (0.004) \\ 
+  & \\ 
+ mix.Party.Democratic.Democratic & 0.483 \\ 
+  & (0.479) \\ 
+  & \\ 
+ mix.Party.Democratic.Independent & 1.090$^{*}$ \\ 
+  & (0.583) \\ 
+  & \\ 
+ mix.Party.Independent.Independent & 10.617 \\ 
+  &  \\ 
+  & \\ 
+ mix.Party.Democratic.Republican & $-$1.913$^{***}$ \\ 
+  & (0.476) \\ 
+  & \\ 
+ mix.Party.Independent.Republican & $-$2.497$^{***}$ \\ 
+  & (0.581) \\ 
+  & \\ 
+ mix.Party.Republican.Republican & $-$1.499$^{***}$ \\ 
+  & (0.483) \\ 
+  & \\ 
+ nodecov.Age & 0.011$^{***}$ \\ 
+  & (0.002) \\ 
+  & \\ 
+ isolates & 6.589 \\ 
+  &  \\ 
+  & \\ 
+\hline \\[-1.8ex] 
+Akaike Inf. Crit. & 5,646.342 \\ 
+Bayesian Inf. Crit. & 5,745.420 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table} 
+
+
+% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Mon, Dec 17, 2018 - 1:27:01 PM
+\begin{table}[!htbp] \centering 
+  \caption{Complex Highly-weighted Model} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Term coefficients:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & top\_net \\ 
+\hline \\[-1.8ex] 
+ nodefactor.Gender.M & $-$0.254$^{**}$ \\ 
+  & (0.109) \\ 
+  & \\ 
+ nodefactor.Race.Asian & $-$1.094$^{***}$ \\ 
+  & (0.390) \\ 
+  & \\ 
+ nodefactor.Race.Hispanic & 0.398 \\ 
+  & (0.248) \\ 
+  & \\ 
+ nodefactor.Race.White & $-$0.026 \\ 
+  & (0.364) \\ 
+  & \\ 
+ nodematch.Gender & 0.032 \\ 
+  & (0.111) \\ 
+  & \\ 
+ nodematch.Race & $-$0.093 \\ 
+  & (0.348) \\ 
+  & \\ 
+ absdiff.Age & $-$0.009$^{**}$ \\ 
+  & (0.004) \\ 
+  & \\ 
+ mix.Party.Democratic.Democratic & $-$0.186 \\ 
+  & (0.562) \\ 
+  & \\ 
+ mix.Party.Democratic.Independent & 0.236 \\ 
+  & (0.675) \\ 
+  & \\ 
+ mix.Party.Independent.Independent & 0.739 \\ 
+  & (0.893) \\ 
+  & \\ 
+ mix.Party.Democratic.Republican & $-$1.589$^{***}$ \\ 
+  & (0.535) \\ 
+  & \\ 
+ mix.Party.Independent.Republican & $-$2.169$^{***}$ \\ 
+  & (0.648) \\ 
+  & \\ 
+ mix.Party.Republican.Republican & $-$1.005$^{*}$ \\ 
+  & (0.553) \\ 
+  & \\ 
+ nodecov.Age & 0.011$^{***}$ \\ 
+  & (0.003) \\ 
+  & \\ 
+ isolates & 824.160 \\ 
+  &  \\ 
+  & \\ 
+ gwesp & $-$0.017$^{***}$ \\ 
+  & (0.005) \\ 
+  & \\ 
+ gwesp.decay & 8.433 \\ 
+  & (38.097) \\ 
+  & \\ 
+\hline \\[-1.8ex] 
+Akaike Inf. Crit. & 5,756.546 \\ 
+Bayesian Inf. Crit. & 5,868.834 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table} 
+
+
+% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Mon, Dec 17, 2018 - 1:27:21 PM
+\begin{table}[!htbp] \centering 
+  \caption{Original Highly-weighted Model} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Term coefficients:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & top\_net \\ 
+\hline \\[-1.8ex] 
+ nodefactor.Gender.M & $-$0.299$^{***}$ \\ 
+  & (0.081) \\ 
+  & \\ 
+ nodefactor.Race.Asian & $-$1.506$^{***}$ \\ 
+  & (0.234) \\ 
+  & \\ 
+ nodefactor.Race.Hispanic & 0.531$^{***}$ \\ 
+  & (0.189) \\ 
+  & \\ 
+ nodefactor.Race.White & $-$0.088 \\ 
+  & (0.359) \\ 
+  & \\ 
+ nodematch.Gender & 0.048 \\ 
+  & (0.095) \\ 
+  & \\ 
+ nodematch.Race & $-$0.104 \\ 
+  & (0.362) \\ 
+  & \\ 
+ absdiff.Age & $-$0.010$^{***}$ \\ 
+  & (0.004) \\ 
+  & \\ 
+ mix.Party.Democratic.Democratic & 0.478 \\ 
+  & (0.480) \\ 
+  & \\ 
+ mix.Party.Democratic.Independent & 1.067$^{*}$ \\ 
+  & (0.568) \\ 
+  & \\ 
+ mix.Party.Independent.Independent & 10.828 \\ 
+  & (196.968) \\ 
+  & \\ 
+ mix.Party.Democratic.Republican & $-$1.919$^{***}$ \\ 
+  & (0.482) \\ 
+  & \\ 
+ mix.Party.Independent.Republican & $-$2.490$^{***}$ \\ 
+  & (0.577) \\ 
+  & \\ 
+ mix.Party.Republican.Republican & $-$1.507$^{***}$ \\ 
+  & (0.487) \\ 
+  & \\ 
+ nodecov.Age & 0.011$^{***}$ \\ 
+  & (0.002) \\ 
+  & \\ 
+\hline \\[-1.8ex] 
+Akaike Inf. Crit. & 5,784.216 \\ 
+Bayesian Inf. Crit. & 5,876.689 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+
 ## Discussion
 --Stay tuned!--
 

@@ -396,4 +396,26 @@ gof(sponsor_top_og)
 plot(simulate(sponsor_top))
 plot(top_net)
 
+ggplot(node_characteristics, aes(x = Gender)) + 
+  geom_histogram(stat = "Count")
+
+ggplot(node_characteristics, aes(x = Age)) + 
+  geom_histogram(stat = "Count")
+
+ggplot(node_characteristics, aes(x = Race)) + 
+  geom_histogram(stat = "Count")
+
+plot(simulate(sponsor_top_limited))
+plot(simulate(sponsor_top))
+plot(simulate(sponsor_top_og))
+plot(top_net)
+
+stargazer(sponsor_top_limited)
+
+stargazer(sponsor_top)
+
+stargazer(sponsor_top_og)
+
+
+
 ```
